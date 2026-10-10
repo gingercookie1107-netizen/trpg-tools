@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>跑团日程表</title>
+<style>
+:root{
+  --cream-bg:#fdefca;
+  --cream-deep:#f4dc9c;
+  --paper:#fffef8;
+  --card:#fffdf5;
+  --ink:#2a3a5a;
+  --ink-soft:#7a6a4a;
+  --line:#e8d8a8;
+  --accent:#fbae3f;
+  --accent-deep:#d88a20;
+  --accent-soft:#fdefca;
+  --accent-btn1:#fbae3f;
+  --accent-btn2:#d88a20;
+  --remind-bg1:#eaf6ff;
+  --remind-bg2:#7ab8e0;
+  --remind-border:#9dd2f0;
+  --shadow:0 2px 10px rgba(58,74,107,.10);
+  --shadow-lg:0 8px 28px rgba(58,74,107,.16);
+  --texture:rgba(58,74,107,.025);
+  --glow1:rgba(253,239,202,.9);
+  --glow2:rgba(157,210,240,.6);
+  --danger-bg:#ffd8d0;
+  --danger-fg:#c04a4a;
+  --live-dot:#9dd2f0;
+  --live-dot-glow1:rgba(157,210,240,.30);
+  --live-dot-glow2:rgba(157,210,240,.10);
+  --pl-bg:#f4dc9c; --pl-fg:#8a6a20; --pl-ev:rgba(244,220,156,.50);
+  --kp-bg:#d8f0d8; --kp-fg:#54724a; --kp-ev:rgba(122,180,109,.20);
+  --gm-bg:#9dd2f0; --gm-fg:#2a3a5a; --gm-ev:rgba(110,140,180,.22);
+  --dm-bg:#e8d8f0; --dm-fg:#6b4a7d; --dm-ev:rgba(150,110,170,.20);
+  --radius:14px;
+}
+[data-theme="2"]{
+  --cream-bg:#fde5ee;
+  --cream-deep:#efc8d7;
+  --paper:#fffbfd;
+  --card:#fffdfe;
+  --ink:#4a3a4a;
+  --ink-soft:#8a7080;
+  --line:#e8d0d8;
+  --accent:#8fb566;
+  --accent-deep:#5e8a4a;
+  --accent-soft:#d9eebd;
+  --accent-btn1:#a3c47a;
+  --accent-btn2:#5e8a4a;
+  --remind-bg1:#f0fae8;
+  --remind-bg2:#8fbf66;
+  --remind-border:#c2e396;
+  --shadow:0 2px 10px rgba(122,96,120,.10);
+  --shadow-lg:0 8px 28px rgba(122,96,120,.16);
+  --texture:rgba(122,96,120,.025);
+  --glow1:rgba(253,229,238,.9);
+  --glow2:rgba(217,238,189,.6);
+  --danger-bg:#f8d8dc;
+  --danger-fg:#a04a5a;
+  --live-dot:#8fb566;
+  --live-dot-glow1:rgba(143,181,102,.25);
+  --live-dot-glow2:rgba(143,181,102,.08);
+  --pl-bg:#efc8d7; --pl-fg:#8a4a6a; --pl-ev:rgba(239,200,215,.45);
+  --kp-bg:#c2e396; --kp-fg:#4a6a2a; --kp-ev:rgba(194,227,150,.40);
+  --gm-bg:#d0ddf0; --gm-fg:#4a6486; --gm-ev:rgba(110,140,180,.20);
+  --dm-bg:#e8d8f0; --dm-fg:#6b4a7d; --dm-ev:rgba(150,110,170,.20);
+}
+[data-theme="3"]{
+  --cream-bg:#fef5dd;
+  --cream-deep:#f8e6b6;
+  --paper:#fffef8;
+  --card:#fffdf5;
+  --ink:#2a4a4a;
+  --ink-soft:#6a8a80;
+  --line:#d8e8e0;
+  --accent:#75bab0;
+  --accent-deep:#4a8a80;
+  --accent-soft:#aedcd5;
+  --accent-btn1:#8fcac0;
+  --accent-btn2:#4a8a80;
+  --remind-bg1:#eaf8f4;
+  --remind-bg2:#aedcd5;
+  --remind-border:#75bab0;
+  --shadow:0 2px 10px rgba(42,74,74,.10);
+  --shadow-lg:0 8px 28px rgba(42,74,74,.16);
+  --texture:rgba(42,74,74,.025);
+  --glow1:rgba(254,245,221,.9);
+  --glow2:rgba(174,220,213,.6);
+  --danger-bg:#f8d8d0;
+  --danger-fg:#a0523a;
+  --live-dot:#75bab0;
+  --live-dot-glow1:rgba(117,186,176,.25);
+  --live-dot-glow2:rgba(117,186,176,.08);
+  --pl-bg:#f8e6b6; --pl-fg:#8a6a20; --pl-ev:rgba(248,230,182,.55);
+  --kp-bg:#aedcd5; --kp-fg:#2a4a4a; --kp-ev:rgba(174,220,213,.45);
+  --gm-bg:#c8d8e8; --gm-fg:#4a6486; --gm-ev:rgba(110,140,180,.20);
+  --dm-bg:#e0d8f0; --dm-fg:#6b4a7d; --dm-ev:rgba(150,110,170,.20);
+}
+[data-theme="4"]{
+  --cream-bg:#fafdcd;
+  --cream-deep:#d9eebd;
+  --paper:#fffef8;
+  --card:#fffdf5;
+  --ink:#3a4a2a;
+  --ink-soft:#6a7a5a;
+  --line:#d8e8c0;
+  --accent:#8fb566;
+  --accent-deep:#5e8a4a;
+  --accent-soft:#c2e396;
+  --accent-btn1:#a3c47a;
+  --accent-btn2:#5e8a4a;
+  --remind-bg1:#fafdcd;
+  --remind-bg2:#c4e9bb;
+  --remind-border:#c2e396;
+  --shadow:0 2px 10px rgba(58,74,42,.10);
+  --shadow-lg:0 8px 28px rgba(58,74,42,.16);
+  --texture:rgba(58,74,42,.025);
+  --glow1:rgba(250,253,205,.9);
+  --glow2:rgba(196,233,187,.6);
+  --danger-bg:#f0d8c8;
+  --danger-fg:#a05a3a;
+  --live-dot:#8fb566;
+  --live-dot-glow1:rgba(143,181,102,.25);
+  --live-dot-glow2:rgba(143,181,102,.08);
+  --pl-bg:#fafdcd; --pl-fg:#7a8a20; --pl-ev:rgba(250,253,205,.65);
+  --kp-bg:#c2e396; --kp-fg:#4a6a2a; --kp-ev:rgba(194,227,150,.45);
+  --gm-bg:#d0ddf0; --gm-fg:#4a6486; --gm-ev:rgba(110,140,180,.20);
+  --dm-bg:#e8d8f0; --dm-fg:#6b4a7d; --dm-ev:rgba(150,110,170,.20);
+}
+[data-theme="5"]{
+  --cream-bg:#fddbea;
+  --cream-deep:#febad8;
+  --paper:#fffbfd;
+  --card:#fffdfe;
+  --ink:#4a3a5a;
+  --ink-soft:#8a7a9a;
+  --line:#e8d0e8;
+  --accent:#bfaae6;
+  --accent-deep:#8a7ac0;
+  --accent-soft:#e3d8f8;
+  --accent-btn1:#cdbcee;
+  --accent-btn2:#8a7ac0;
+  --remind-bg1:#f5f0fc;
+  --remind-bg2:#8a7ac0;
+  --remind-border:#bfaae6;
+  --shadow:0 2px 10px rgba(122,96,150,.10);
+  --shadow-lg:0 8px 28px rgba(122,96,150,.16);
+  --texture:rgba(122,96,150,.025);
+  --glow1:rgba(253,219,234,.9);
+  --glow2:rgba(227,216,248,.6);
+  --danger-bg:#f8d8dc;
+  --danger-fg:#a04a5a;
+  --live-dot:#bfaae6;
+  --live-dot-glow1:rgba(191,170,230,.25);
+  --live-dot-glow2:rgba(191,170,230,.08);
+  --pl-bg:#febad8; --pl-fg:#8a3a6a; --pl-ev:rgba(254,186,216,.50);
+  --kp-bg:#d9eebd; --kp-fg:#54724a; --kp-ev:rgba(194,227,150,.30);
+  --gm-bg:#bcc2e5; --gm-fg:#3a3550; --gm-ev:rgba(118,130,192,.22);
+  --dm-bg:#e3d8f8; --dm-fg:#5a4a7a; --dm-ev:rgba(191,170,230,.35);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{min-height:100%}
+body{
+  font-family:"PingFang SC","Microsoft YaHei","Noto Sans SC",sans-serif;
+  color:var(--ink);
+  background:
+    radial-gradient(1200px 500px at 85% -10%, var(--glow1), transparent),
+    radial-gradient(900px 420px at -10% 110%, var(--glow2), transparent),
+    var(--cream-bg);
+  background-attachment:fixed;
+  transition:background-color .35s ease, color .35s ease;
+}
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.5;
+  background-image:repeating-linear-gradient(0deg, var(--texture) 0 1px, transparent 1px 3px);
+}
+button{font-family:inherit;cursor:pointer}
+input,textarea,select{font-family:inherit;color:var(--ink)}
+::selection{background:var(--accent-soft)}
+
+.app{position:relative;z-index:1}
+.main{max-width:1200px;margin:0 auto;padding:26px 24px 60px}
+
+.page-head{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;margin-bottom:18px;flex-wrap:wrap}
+.page-head h1{font-size:22px;letter-spacing:1px}
+.page-head p{font-size:13px;color:var(--ink-soft);margin-top:4px}
+.head-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+
+.theme-picker{
+  display:flex;align-items:center;gap:6px;
+  padding:6px 12px 6px 14px;border-radius:999px;
+  background:var(--card);border:1px solid var(--line);
+  box-shadow:var(--shadow);transition:background .35s, border-color .35s;
+}
+.theme-picker .theme-label{font-size:12px;color:var(--ink-soft);margin-right:2px}
+.theme-dot{
+  width:22px;height:22px;border-radius:50%;
+  border:2px solid var(--line);cursor:pointer;padding:0;
+  transition:transform .15s, border-color .15s, box-shadow .15s;
+}
+.theme-dot:hover{transform:scale(1.15)}
+.theme-dot.active{border-color:var(--accent-deep);box-shadow:0 0 0 3px var(--accent-soft)}
+.theme-dot[data-theme="1"]{background:linear-gradient(135deg,#9dd2f0,#fbae3f)}
+.theme-dot[data-theme="2"]{background:linear-gradient(135deg,#c2e396,#efc8d7)}
+.theme-dot[data-theme="3"]{background:linear-gradient(135deg,#75bab0,#f8e6b6)}
+.theme-dot[data-theme="4"]{background:linear-gradient(135deg,#c2e396,#fafdcd)}
+.theme-dot[data-theme="5"]{background:linear-gradient(135deg,#bfaae6,#febad8)}
+
+.card{
+  background:var(--card);border:1px solid var(--line);
+  border-radius:var(--radius);box-shadow:var(--shadow);
+  transition:background .35s, border-color .35s;
+}
+.btn{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:9px 16px;border-radius:10px;border:1px solid transparent;
+  font-size:13.5px;transition:.15s;background:var(--cream-deep);color:var(--ink);
+}
+.btn:hover{filter:brightness(.97)}
+.btn-primary{background:linear-gradient(135deg,var(--accent-btn1),var(--accent-btn2));color:#fff;box-shadow:var(--shadow)}
+.btn-primary:hover{filter:brightness(1.05)}
+.btn-ghost{background:transparent;border-color:var(--line);color:var(--ink-soft)}
+.btn-ghost:hover{background:var(--cream-deep);color:var(--ink)}
+.btn-sm{padding:5px 11px;font-size:12.5px;border-radius:8px}
+
+.icon-btn{border:none;background:transparent;color:var(--ink-soft);padding:4px 6px;border-radius:7px;font-size:14px;line-height:1}
+.icon-btn:hover{background:var(--accent-soft);color:var(--accent-deep)}
+.icon-btn.danger:hover{background:var(--danger-bg);color:var(--danger-fg)}
+
+.remind-bar{
+  display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+  padding:14px 18px;margin-bottom:16px;border-radius:var(--radius);
+  background:linear-gradient(90deg,var(--remind-bg1),var(--remind-bg2));
+  border:1px solid var(--remind-border);box-shadow:var(--shadow);
+  transition:background .35s, border-color .35s;
+}
+.remind-bar .dot{
+  width:10px;height:10px;border-radius:50%;flex-shrink:0;
+  background:var(--accent);box-shadow:0 0 0 4px var(--live-dot-glow1);
+}
+.remind-bar .dot.live{background:var(--live-dot);animation:pulse 1.6s infinite}
+@keyframes pulse{
+  0%,100%{box-shadow:0 0 0 4px var(--live-dot-glow1)}
+  50%{box-shadow:0 0 0 8px var(--live-dot-glow2)}
+}
+.remind-bar b{font-size:14px}
+.remind-bar > span{font-size:12.5px;color:var(--ink-soft)}
+.remind-bar .spacer{flex:1}
+
+.sched-grid{display:grid;grid-template-columns:1.35fr 1fr;gap:18px;align-items:start}
+
+.cal-head{display:flex;align-items:center;justify-content:space-between;padding:14px 16px 6px}
+.cal-head b{font-size:16px;letter-spacing:1px}
+.cal-week,.cal-days{display:grid;grid-template-columns:repeat(7,1fr);padding:0 12px}
+.cal-week div{text-align:center;font-size:11.5px;color:var(--ink-soft);padding:6px 0;opacity:.75}
+.cal-days{padding-bottom:10px;gap:4px}
+.cal-cell{
+  min-height:70px;border-radius:10px;padding:5px 6px;font-size:12px;
+  border:1px solid transparent;cursor:pointer;background:transparent;
+  position:relative;transition:background .15s;text-align:left;
+  display:flex;flex-direction:column;gap:2px;overflow:hidden;
+}
+.cal-cell:hover{background:var(--cream-deep)}
+.cal-cell.other{opacity:.35}
+.cal-cell.today .dnum{background:var(--accent);color:#fff}
+.cal-cell.sel{background:var(--accent-soft);border-color:var(--accent)}
+.cal-cell .dnum{
+  display:inline-flex;width:22px;height:22px;flex-shrink:0;
+  align-items:center;justify-content:center;border-radius:50%;font-size:12px;
+}
+.cal-ev{
+  display:block;font-size:10.5px;line-height:1.5;
+  border-radius:5px;padding:1px 5px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.cal-ev.r-pl{background:var(--pl-ev);color:var(--pl-fg)}
+.cal-ev.r-kp{background:var(--kp-ev);color:var(--kp-fg)}
+.cal-ev.r-gm{background:var(--gm-ev);color:var(--gm-fg)}
+.cal-ev.r-dm{background:var(--dm-ev);color:var(--dm-fg)}
+.cal-ev.more{background:transparent;color:var(--ink-soft);padding-left:3px;opacity:.7}
+
+.cal-foot{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:4px 16px 14px;font-size:11.5px;color:var(--ink-soft);opacity:.85;
+}
+
+.agenda-side{padding:18px}
+.agenda-side h3{font-size:15px;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.agenda-side h3 span{font-size:12px;font-weight:400;color:var(--ink-soft)}
+.agenda-item{display:flex;gap:12px;padding:11px 0;border-bottom:1px dashed var(--line)}
+.agenda-item:last-child{border-bottom:none}
+.agenda-date{
+  flex-shrink:0;width:52px;text-align:center;background:var(--cream-deep);
+  border-radius:10px;padding:6px 2px;height:fit-content;
+  transition:background .35s;
+}
+.agenda-date b{display:block;font-size:17px;line-height:1.2}
+.agenda-date span{font-size:10.5px;color:var(--ink-soft)}
+.agenda-info{flex:1;min-width:0}
+.agenda-info b{font-size:13.5px;display:block;word-break:break-word}
+.agenda-info p{font-size:12px;color:var(--ink-soft);margin-top:3px;line-height:1.6;word-break:break-word}
+.agenda-info p.note{white-space:pre-wrap}
+.agenda-ops{display:flex;flex-direction:column;gap:2px;flex-shrink:0}
+
+.agenda-item.ended .agenda-date,
+.agenda-item.ended .agenda-info{opacity:.45}
+.agenda-item.ended .agenda-info b{
+  text-decoration:line-through;
+  text-decoration-thickness:1px;
+  text-decoration-color:currentColor;
+}
+
+.tag{display:inline-block;padding:1px 8px;border-radius:999px;font-size:11px;font-weight:600}
+.tag-pl{background:var(--pl-bg);color:var(--pl-fg)}
+.tag-kp{background:var(--kp-bg);color:var(--kp-fg)}
+.tag-gm{background:var(--gm-bg);color:var(--gm-fg)}
+.tag-dm{background:var(--dm-bg);color:var(--dm-fg)}
+
+.empty{
+  padding:34px 20px;text-align:center;color:var(--ink-soft);font-size:13px;
+  line-height:2;border:1.5px dashed var(--line);border-radius:var(--radius);
+  background:var(--paper);opacity:.75;
+}
+
+.modal-mask{
+  position:fixed;inset:0;background:rgba(30,24,18,.45);backdrop-filter:blur(2px);
+  display:none;align-items:flex-start;justify-content:center;z-index:50;
+  padding:6vh 16px;overflow-y:auto;
+}
+.modal-mask.open{display:flex}
+.modal{
+  background:var(--card);border-radius:16px;box-shadow:var(--shadow-lg);
+  width:100%;max-width:560px;padding:24px 26px;
+  animation:fadeIn .2s ease;border:1px solid var(--line);
+}
+.modal h3{font-size:17px;margin-bottom:16px;letter-spacing:.5px}
+.modal-foot{display:flex;justify-content:flex-end;gap:10px;margin-top:18px}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+.field{margin-bottom:13px}
+.field label{display:block;font-size:12.5px;color:var(--ink-soft);margin-bottom:5px}
+.field input,.field textarea,.field select{
+  width:100%;padding:9px 12px;border:1px solid var(--line);border-radius:10px;
+  background:var(--paper);font-size:13.5px;outline:none;transition:.15s;
+}
+.field input:focus,.field textarea:focus,.field select:focus{
+  border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);
+}
+.field textarea{resize:vertical;min-height:62px;line-height:1.65}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}
+
+#toast{
+  position:fixed;left:50%;bottom:34px;transform:translateX(-50%) translateY(20px);
+  background:var(--ink);color:var(--card);padding:10px 22px;border-radius:999px;
+  font-size:13px;opacity:0;pointer-events:none;transition:.25s;z-index:99;
+  box-shadow:var(--shadow-lg);max-width:calc(100vw - 40px);text-align:center;
+}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+@media (max-width:900px){
+  .sched-grid{grid-template-columns:1fr}
+  .main{padding:18px 14px 50px}
+  .row2{grid-template-columns:1fr}
+  .cal-cell{min-height:58px;padding:4px}
+  .cal-ev{font-size:10px;padding:0 4px}
+  .head-actions{width:100%}
+  .page-head h1{font-size:19px}
+  .theme-picker{padding:5px 8px}
+  .theme-dot{width:18px;height:18px}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <main class="main">
+
+    <div class="page-head">
+      <div>
+        <h1>跑团档期安排表</h1>
+        <p>只要记得写进去就很直观，忘写了就没办法了</p>
+      </div>
+      <div class="head-actions">
+        <div class="theme-picker" id="theme-picker" title="切换主题">
+          <span class="theme-label">主题</span>
+          <button class="theme-dot" data-theme="1" title="主题一 · 蓝橙奶油"></button>
+          <button class="theme-dot" data-theme="2" title="主题二 · 粉绿"></button>
+          <button class="theme-dot" data-theme="3" title="主题三 · 青绿奶油"></button>
+          <button class="theme-dot" data-theme="4" title="主题四 · 黄绿"></button>
+          <button class="theme-dot" data-theme="5" title="主题五 · 粉紫"></button>
+        </div>
+        <button class="btn btn-ghost" id="btn-export">导出数据</button>
+        <button class="btn btn-ghost" id="btn-import">导入数据</button>
+        <button class="btn btn-primary" id="btn-new">＋ 新增场次</button>
+      </div>
+    </div>
+
+    <div class="remind-bar" id="remind-bar"></div>
+
+    <div class="sched-grid">
+      <div class="card">
+        <div class="cal-head">
+          <button class="icon-btn" id="cal-prev" title="上一月">◀</button>
+          <b id="cal-title"></b>
+          <button class="icon-btn" id="cal-next" title="下一月">▶</button>
+        </div>
+        <div class="cal-week">
+          <div>日</div><div>一</div><div>二</div><div>三</div><div>四</div><div>五</div><div>六</div>
+        </div>
+        <div class="cal-days" id="cal-days"></div>
+        <div class="cal-foot">
+          <button class="btn btn-sm btn-ghost" id="btn-today">回到今天</button>
+          <span>点日期可筛选，再次点击取消</span>
+        </div>
+      </div>
+
+      <div class="card agenda-side">
+        <h3>🗓 日程表 <span id="agenda-count"></span></h3>
+        <div id="agenda-list"></div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div class="modal-mask" id="modal-mask"><div class="modal" id="modal-box"></div></div>
+<div id="toast"></div>
+<input type="file" id="import-file" accept=".json" style="display:none">
+
+<script>
+const THEME_KEY = 'trpg_schedule_theme';
+const THEME_LIST = ['1', '2', '3', '4', '5'];
+
+function applyTheme(n){
+  n = String(n);
+  if (!THEME_LIST.includes(n)) n = '1';
+  if (n === '1') document.documentElement.removeAttribute('data-theme');
+  else document.documentElement.setAttribute('data-theme', n);
+  document.querySelectorAll('.theme-dot').forEach(d => {
+    d.classList.toggle('active', d.dataset.theme === n);
+  });
+}
+
+function initTheme(){
+  let saved = '1';
+  try { saved = localStorage.getItem(THEME_KEY) || '1'; } catch(e) {}
+  applyTheme(saved);
+  document.getElementById('theme-picker').addEventListener('click', e => {
+    const btn = e.target.closest('.theme-dot');
+    if (!btn) return;
+    const n = btn.dataset.theme;
+    applyTheme(n);
+    try { localStorage.setItem(THEME_KEY, n); } catch(e) {}
+    renderRemindBar();
+  });
+}
+
+const LS_KEY = 'trpg_schedule_v1';
+const ROLES = ['PL', 'KP', 'GM', 'DM'];
+let DB = { schedule: [] };
+
+function loadDB() {
+  try {
+    const raw = localStorage.getItem(LS_KEY);
+    if (raw) {
+      const data = JSON.parse(raw);
+      if (data && typeof data === 'object') {
+        DB = Object.assign({ schedule: [] }, data);
+        if (!Array.isArray(DB.schedule)) DB.schedule = [];
+      }
+    }
+  } catch (e) {}
+}
+
+function saveDB() {
+  try {
+    localStorage.setItem(LS_KEY, JSON.stringify(DB));
+    return true;
+  } catch (e) {
+    toast('保存失败：本地存储空间不足');
+    return false;
+  }
+}
+
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+
+function esc(s) {
+  return String(s ?? '').replace(/[&<>"']/g, c =>
+    ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])
+  );
+}
+
+function dateStr(d) {
+  return d.getFullYear() + '-' +
+    String(d.getMonth() + 1).padStart(2, '0') + '-' +
+    String(d.getDate()).padStart(2, '0');
+}
+
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(t._h);
+  t._h = setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+function timeRange(s) {
+  const st = s.startTime || '';
+  const et = s.endTime || '';
+  if (st && et) return st + ' - ' + et;
+  return st || et || '时间未填';
+}
+
+function startDate(s) {
+  if (!s || !s.date) return null;
+  const t = s.startTime || '20:00';
+  const d = new Date(s.date + 'T' + t);
+  return isNaN(d.getTime()) ? null : d;
+}
+
+function endDate(s, st) {
+  st = st || startDate(s);
+  if (!st) return null;
+  if (s.endTime) {
+    let et = new Date(s.date + 'T' + s.endTime);
+    if (isNaN(et.getTime())) return null;
+    if (et <= st) et = new Date(et.getTime() + 864e5);
+    return et;
+  }
+  return new Date(st.getTime() + 4 * 36e5);
+}
+
+function isEnded(s) {
+  const st = startDate(s);
+  if (!st) return false;
+  const et = endDate(s, st);
+  if (!et) return false;
+  return et.getTime() < Date.now();
+}
+
+function humanDiff(ms) {
+  if (ms < 0) ms = 0;
+  const dd = Math.floor(ms / 864e5);
+  const hh = Math.floor(ms % 864e5 / 36e5);
+  const mm = Math.floor(ms % 36e5 / 6e4);
+  if (dd > 0) return dd + ' 天 ' + hh + ' 小时';
+  if (hh > 0) return hh + ' 小时 ' + mm + ' 分钟';
+  if (mm > 0) return mm + ' 分钟';
+  return '不到 1 分钟';
+}
+
+const mask = document.getElementById('modal-mask');
+const mbox = document.getElementById('modal-box');
+
+function openModal(html) {
+  mbox.innerHTML = html;
+  mask.classList.add('open');
+}
+function closeModal() {
+  mask.classList.remove('open');
+  mbox.innerHTML = '';
+}
+mask.addEventListener('click', e => { if (e.target === mask) closeModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+let calY, calM, selDate = null;
+(function () {
+  const n = new Date();
+  calY = n.getFullYear();
+  calM = n.getMonth();
+})();
+
+function renderCal() {
+  document.getElementById('cal-title').textContent = calY + '年' + (calM + 1) + '月';
+
+  const first = new Date(calY, calM, 1);
+  const start = first.getDay();
+  const days = new Date(calY, calM + 1, 0).getDate();
+  const todayStr = dateStr(new Date());
+
+  let html = '';
+  let d = 1 - start;
+
+  for (let i = 0; i < 42; i++) {
+    const cur = new Date(calY, calM, d);
+    const ds = dateStr(cur);
+    const other = cur.getMonth() !== calM;
+
+    const evs = DB.schedule
+      .filter(s => s.date === ds)
+      .sort((a, b) => (a.startTime || '').localeCompare(b.startTime || ''));
+
+    let cls = 'cal-cell';
+    if (other) cls += ' other';
+    if (ds === todayStr) cls += ' today';
+    if (ds === selDate) cls += ' sel';
+
+    let inner = '<span class="dnum">' + cur.getDate() + '</span>';
+
+    evs.slice(0, 2).forEach(e => {
+      const role = ROLES.includes(e.role) ? e.role : 'PL';
+      inner += '<span class="cal-ev r-' + role.toLowerCase() + '">' +
+        esc((e.startTime || '') + ' ' + (e.title || '未命名')) +
+        '</span>';
+    });
+    if (evs.length > 2) {
+      inner += '<span class="cal-ev more">+' + (evs.length - 2) + ' 场</span>';
+    }
+
+    html += '<button class="' + cls + '" data-date="' + ds + '">' + inner + '</button>';
+
+    d++;
+    if (d > days && i >= 27 && (i + 1) % 7 === 0) break;
+  }
+
+  const box = document.getElementById('cal-days');
+  box.innerHTML = html;
+
+  box.querySelectorAll('.cal-cell').forEach(c => {
+    c.onclick = () => {
+      selDate = (selDate === c.dataset.date) ? null : c.dataset.date;
+      renderCal();
+      renderAgenda();
+    };
+  });
+}
+
+function renderAgenda() {
+  const list = document.getElementById('agenda-list');
+  const countEl = document.getElementById('agenda-count');
+
+  let items = DB.schedule.slice().sort((a, b) => {
+    const ka = (a.date || '') + (a.startTime || '');
+    const kb = (b.date || '') + (b.startTime || '');
+    return ka.localeCompare(kb);
+  });
+
+  if (selDate) items = items.filter(s => s.date === selDate);
+
+  countEl.textContent = selDate
+    ? '（' + selDate + ' · ' + items.length + ' 场）'
+    : '（共 ' + items.length + ' 场）';
+
+  if (!items.length) {
+    list.innerHTML = '<div class="empty">' +
+      (selDate ? esc(selDate) + ' 暂无场次' : '暂无日程') +
+      '<br>' +
+      (selDate ? '再次点击该日期可取消筛选' : '点右上角「新增场次」排一场团吧') +
+      '</div>';
+    return;
+  }
+
+  list.innerHTML = items.map(s => {
+    const d = new Date(s.date + 'T00:00:00');
+    const valid = !isNaN(d.getTime());
+    const dayNum = valid ? d.getDate() : '?';
+    const monthNum = valid ? (d.getMonth() + 1) : '?';
+    const role = ROLES.includes(s.role) ? s.role : 'PL';
+    const ended = isEnded(s);
+    const endedCls = ended ? ' ended' : '';
+
+    return '<div class="agenda-item' + endedCls + '">' +
+      '<div class="agenda-date"><b>' + dayNum + '</b><span>' + monthNum + '月</span></div>' +
+      '<div class="agenda-info">' +
+        '<b>' + esc(s.title || '未命名场次') + '</b>' +
+        '<p>' + esc(timeRange(s)) + ' · ' + esc(s.rule || '规则未填') +
+          ' · <span class="tag tag-' + role.toLowerCase() + '">' + role + '</span></p>' +
+        (s.note ? '<p class="note">' + esc(s.note) + '</p>' : '') +
+      '</div>' +
+      '<div class="agenda-ops">' +
+        '<button class="icon-btn" data-edit="' + s.id + '" title="编辑">✏️</button>' +
+        '<button class="icon-btn" data-copy="' + s.id + '" title="复制">📋</button>' +
+        '<button class="icon-btn danger" data-del="' + s.id + '" title="删除">🗑</button>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+
+  list.querySelectorAll('[data-edit]').forEach(b => {
+    b.onclick = () => openSchedModal(b.dataset.edit);
+  });
+
+  list.querySelectorAll('[data-copy]').forEach(b => {
+    b.onclick = () => openSchedModal(null, b.dataset.copy);
+  });
+
+  list.querySelectorAll('[data-del]').forEach(b => {
+    b.onclick = () => {
+      if (confirm('确定删除这场安排吗？')) {
+        DB.schedule = DB.schedule.filter(s => s.id !== b.dataset.del);
+        saveDB();
+        renderAll();
+        toast('已删除');
+      }
+    };
+  });
+}
+
+function getRuleSuggestions() {
+  const set = new Set(['COC7', 'DND5E', '无限恐怖', '忍神', 'inSANe', '其他']);
+  DB.schedule.forEach(s => { if (s.rule) set.add(s.rule); });
+  return [...set];
+}
+
+function openSchedModal(id, copyFromId) {
+  const editing = !!id;
+
+  let s;
+  if (editing) {
+    s = DB.schedule.find(x => x.id === id);
+  } else if (copyFromId) {
+    const src = DB.schedule.find(x => x.id === copyFromId);
+    if (src) {
+      s = {
+        date: src.date,
+        startTime: src.startTime,
+        endTime: src.endTime,
+        title: src.title,
+        rule: src.rule,
+        role: src.role,
+        note: src.note
+      };
+    }
+  }
+  if (!s) {
+    s = {
+      date: selDate || dateStr(new Date()),
+      startTime: '20:00',
+      endTime: '23:00',
+      title: '',
+      rule: '',
+      role: 'PL',
+      note: ''
+    };
+  }
+
+  const modalTitle = editing ? '编辑场次' : (copyFromId ? '复制场次' : '新增场次');
+
+  const roleOptions = ROLES.map(r =>
+    '<option value="' + r + '"' + (s.role === r ? ' selected' : '') + '>' + r + '</option>'
+  ).join('');
+
+  const ruleList = getRuleSuggestions()
+    .map(r => '<option value="' + esc(r) + '"></option>')
+    .join('');
+
+  openModal(
+    '<h3>' + modalTitle + '</h3>' +
+
+    '<div class="field"><label>日期</label>' +
+      '<input type="date" id="f-date" value="' + esc(s.date) + '">' +
+    '</div>' +
+
+    '<div class="row2">' +
+      '<div class="field"><label>开始时间</label>' +
+        '<input type="time" id="f-start" value="' + esc(s.startTime || '') + '">' +
+      '</div>' +
+      '<div class="field"><label>结束时间</label>' +
+        '<input type="time" id="f-end" value="' + esc(s.endTime || '') + '">' +
+      '</div>' +
+    '</div>' +
+
+    '<div class="field"><label>场次名称</label>' +
+      '<input id="f-title" value="' + esc(s.title || '') + '" placeholder="如：【忍神】妖刀">' +
+    '</div>' +
+
+    '<div class="row2">' +
+      '<div class="field"><label>规则（手动输入）</label>' +
+        '<input id="f-rule" value="' + esc(s.rule || '') + '" placeholder="如：COC7、DND5E" list="rule-list">' +
+        '<datalist id="rule-list">' + ruleList + '</datalist>' +
+      '</div>' +
+      '<div class="field"><label>我的身份</label>' +
+        '<select id="f-role">' + roleOptions + '</select>' +
+      '</div>' +
+    '</div>' +
+
+    '<div class="field"><label>备注</label>' +
+      '<textarea id="f-note" rows="2" placeholder="可选">' + esc(s.note || '') + '</textarea>' +
+    '</div>' +
+
+    '<div class="modal-foot">' +
+      '<button class="btn btn-ghost" id="m-cancel">取消</button>' +
+      '<button class="btn btn-primary" id="m-ok">保存</button>' +
+    '</div>'
+  );
+
+  document.getElementById('m-cancel').onclick = closeModal;
+
+  document.getElementById('m-ok').onclick = () => {
+    const date = document.getElementById('f-date').value;
+    const startTime = document.getElementById('f-start').value;
+    const endTime = document.getElementById('f-end').value;
+    const title = document.getElementById('f-title').value.trim();
+    const rule = document.getElementById('f-rule').value.trim();
+    const role = document.getElementById('f-role').value;
+    const note = document.getElementById('f-note').value.trim();
+
+    if (!date) { toast('请选择日期'); return; }
+    if (!startTime) { toast('请填写开始时间'); return; }
+    if (!title) { toast('请填写场次名称'); return; }
+
+    const data = { date, startTime, endTime, title, rule, role, note };
+
+    if (editing) {
+      Object.assign(DB.schedule.find(x => x.id === id), data);
+    } else {
+      DB.schedule.push(Object.assign({ id: uid() }, data));
+    }
+
+    saveDB();
+    closeModal();
+    renderAll();
+    toast(editing ? '已更新' : (copyFromId ? '已另存为新场次' : '已保存'));
+  };
+}
+
+function getActiveList(now) {
+  now = now || new Date();
+  return DB.schedule.filter(s => {
+    const st = startDate(s);
+    if (!st) return false;
+    const et = endDate(s, st);
+    if (!et) return false;
+    return now >= st && now <= et;
+  }).sort((a, b) => {
+    const ta = startDate(a), tb = startDate(b);
+    return (ta ? ta.getTime() : 0) - (tb ? tb.getTime() : 0);
+  });
+}
+
+function getNext(now) {
+  now = now || new Date();
+  const list = DB.schedule
+    .map(s => ({ s, t: startDate(s) }))
+    .filter(x => x.t && x.t.getTime() > now.getTime())
+    .sort((a, b) => a.t - b.t);
+  return list[0] || null;
+}
+
+function renderRemindBar() {
+  const bar = document.getElementById('remind-bar');
+  const now = new Date();
+  const active = getActiveList(now);
+  const next = getNext(now);
+
+  const todayBtn = '<button class="btn btn-sm" id="btn-today-quick">定位到当天</button>';
+
+  let html = '';
+  let targetDate = null;
+
+  if (active.length) {
+    const s = active[0];
+    targetDate = s.date;
+    const more = active.length > 1 ? '（另有 ' + (active.length - 1) + ' 场进行中）' : '';
+    html = '<span class="dot live"></span>' +
+      '<b>进行中：' + esc(s.title || '未命名场次') + '</b>' +
+      '<span>' + esc(s.date) + ' ' + esc(timeRange(s)) +
+        ' · ' + esc(s.rule || '规则未填') + ' · ' + esc(s.role) + more + '</span>' +
+      '<span class="spacer"></span>' + todayBtn;
+  } else if (next) {
+    const diff = next.t - now;
+    targetDate = next.s.date;
+    html = '<span class="dot"></span>' +
+      '<b>下一场：' + esc(next.s.title || '未命名场次') + '</b>' +
+      '<span>' + esc(next.s.date) + ' ' + esc(timeRange(next.s)) +
+        ' · ' + esc(next.s.rule || '规则未填') +
+        ' · 还有 ' + humanDiff(diff) + '</span>' +
+      '<span class="spacer"></span>' + todayBtn;
+  } else {
+    html = '<span class="dot"></span><b>暂无安排</b>' +
+      '<span>点右上角「新增场次」排一场团吧</span>' +
+      '<span class="spacer"></span>' + todayBtn;
+  }
+
+  bar.innerHTML = html;
+
+  const tb = document.getElementById('btn-today-quick');
+  if (tb) {
+    tb.onclick = () => {
+      // 优先定位到提醒栏当前显示的日程所在日期；否则定位到真正的今天
+      const target = targetDate || dateStr(new Date());
+      const d = new Date(target + 'T00:00:00');
+      if (!isNaN(d.getTime())) {
+        calY = d.getFullYear();
+        calM = d.getMonth();
+      }
+      selDate = target;
+      renderCal();
+      renderAgenda();
+    };
+  }
+}
+
+function renderAll() {
+  renderCal();
+  renderAgenda();
+  renderRemindBar();
+}
+
+document.getElementById('cal-prev').onclick = () => {
+  calM--;
+  if (calM < 0) { calM = 11; calY--; }
+  renderCal();
+};
+
+document.getElementById('cal-next').onclick = () => {
+  calM++;
+  if (calM > 11) { calM = 0; calY++; }
+  renderCal();
+};
+
+document.getElementById('btn-today').onclick = () => {
+  const n = new Date();
+  calY = n.getFullYear();
+  calM = n.getMonth();
+  selDate = dateStr(n);
+  renderCal();
+  renderAgenda();
+};
+
+document.getElementById('btn-new').onclick = () => openSchedModal();
+
+document.getElementById('btn-export').onclick = () => {
+  const blob = new Blob([JSON.stringify(DB, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = '跑团日程备份_' + dateStr(new Date()) + '.json';
+  a.click();
+  URL.revokeObjectURL(a.href);
+  toast('备份文件已导出');
+};
+
+document.getElementById('btn-import').onclick = () => {
+  document.getElementById('import-file').click();
+};
+
+document.getElementById('import-file').addEventListener('change', function () {
+  const f = this.files[0];
+  if (!f) return;
+  const r = new FileReader();
+
+  r.onload = () => {
+    try {
+      const data = JSON.parse(r.result);
+      if (!data || typeof data !== 'object') throw 0;
+
+      let schedule = [];
+      if (Array.isArray(data)) schedule = data;
+      else if (Array.isArray(data.schedule)) schedule = data.schedule;
+      else throw 0;
+
+      DB.schedule = schedule
+        .map(s => ({
+          id: s.id || uid(),
+          date: s.date || '',
+          startTime: s.startTime || s.time || '20:00',
+          endTime: s.endTime || '',
+          title: s.title || '未命名场次',
+          rule: s.rule || '',
+          role: ROLES.includes(s.role) ? s.role : 'PL',
+          note: s.note || ''
+        }))
+        .filter(s => s.date);
+
+      saveDB();
+      renderAll();
+      toast('导入成功，共 ' + DB.schedule.length + ' 条');
+    } catch (e) {
+      toast('文件格式不正确，导入失败');
+    }
+  };
+
+  r.readAsText(f);
+  this.value = '';
+});
+
+const notifiedSet = new Set();
+
+setInterval(() => {
+  renderRemindBar();
+  renderAgenda();
+
+  const now = new Date();
+  DB.schedule.forEach(s => {
+    const st = startDate(s);
+    if (!st) return;
+
+    const diff = st - now;
+    if (diff > 0 && diff <= 5 * 60 * 1000 && !notifiedSet.has(s.id)) {
+      notifiedSet.add(s.id);
+      const msg = '《' + (s.title || '未命名场次') + '》即将开始（' + (s.startTime || '') + '）';
+
+      if (window.Notification && Notification.permission === 'granted') {
+        try { new Notification('跑团提醒', { body: msg }); } catch (e) {}
+      }
+      toast('⏰ ' + msg);
+    }
+  });
+}, 30000);
+
+(function seed() {
+  if (localStorage.getItem(LS_KEY)) return;
+
+  const today = new Date();
+  const d1 = new Date(today); d1.setDate(d1.getDate() + 2);
+
+  DB.schedule = [{
+    id: uid(),
+    date: dateStr(d1),
+    startTime: '20:00',
+    endTime: '23:30',
+    title: '《疯狂山脉》',
+    rule: 'COC7',
+    role: 'PL',
+    note: '带上调查员笔记，这次进洞'
+  }];
+
+  saveDB();
+})();
+
+initTheme();
+loadDB();
+renderAll();
+</script>
+</body>
+</html>
