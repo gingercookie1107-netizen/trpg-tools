@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>跑团记录管理</title>
+<style>
+:root{
+  --cream-bg:#fdefca; --cream-deep:#f4dc9c; --paper:#fffef8; --card:#fffdf5;
+  --ink:#2a3a5a; --ink-soft:#7a6a4a; --line:#e8d8a8;
+  --accent:#fbae3f; --accent-deep:#d88a20; --accent-soft:#fdefca;
+  --accent-btn1:#fbae3f; --accent-btn2:#d88a20;
+  --shadow:0 2px 10px rgba(58,74,107,.10); --shadow-lg:0 8px 28px rgba(58,74,107,.16);
+  --texture:rgba(58,74,107,.025);
+  --glow1:rgba(253,239,202,.9); --glow2:rgba(157,210,240,.6);
+  --danger-bg:#ffd8d0; --danger-fg:#c04a4a;
+  --pl-bg:#FFC8DD;  --pl-fg:#A0456B;
+  --kp-bg:#B5EAD7;  --kp-fg:#3A7A5C;
+  --gm-bg:#BDE0FE;  --gm-fg:#3A5F8A;
+  --dm-bg:#CDB4DB;  --dm-fg:#6B4A7D;
+  --radius:14px;
+}
+[data-theme="2"]{
+  --cream-bg:#fde5ee; --cream-deep:#efc8d7; --paper:#fffbfd; --card:#fffdfe;
+  --ink:#4a3a4a; --ink-soft:#8a7080; --line:#e8d0d8;
+  --accent:#8fb566; --accent-deep:#5e8a4a; --accent-soft:#d9eebd;
+  --accent-btn1:#a3c47a; --accent-btn2:#5e8a4a;
+  --shadow:0 2px 10px rgba(122,96,120,.10); --shadow-lg:0 8px 28px rgba(122,96,120,.16);
+  --texture:rgba(122,96,120,.025);
+  --glow1:rgba(253,229,238,.9); --glow2:rgba(217,238,189,.6);
+  --danger-bg:#f8d8dc; --danger-fg:#a04a5a;
+  --pl-bg:#efc8d7; --pl-fg:#8a4a6a;
+  --kp-bg:#c2e396; --kp-fg:#4a6a2a;
+  --gm-bg:#d0ddf0; --gm-fg:#4a6486;
+  --dm-bg:#e8d8f0; --dm-fg:#6b4a7d;
+}
+[data-theme="3"]{
+  --cream-bg:#fef5dd; --cream-deep:#f8e6b6; --paper:#fffef8; --card:#fffdf5;
+  --ink:#2a4a4a; --ink-soft:#6a8a80; --line:#d8e8e0;
+  --accent:#75bab0; --accent-deep:#4a8a80; --accent-soft:#aedcd5;
+  --accent-btn1:#8fcac0; --accent-btn2:#4a8a80;
+  --shadow:0 2px 10px rgba(42,74,74,.10); --shadow-lg:0 8px 28px rgba(42,74,74,.16);
+  --texture:rgba(42,74,74,.025);
+  --glow1:rgba(254,245,221,.9); --glow2:rgba(174,220,213,.6);
+  --danger-bg:#f8d8d0; --danger-fg:#a0523a;
+  --pl-bg:#f8e6b6; --pl-fg:#8a6a20;
+  --kp-bg:#aedcd5; --kp-fg:#2a4a4a;
+  --gm-bg:#c8d8e8; --gm-fg:#4a6486;
+  --dm-bg:#e0d8f0; --dm-fg:#6b4a7d;
+}
+[data-theme="4"]{
+  --cream-bg:#fafdcd; --cream-deep:#d9eebd; --paper:#fffef8; --card:#fffdf5;
+  --ink:#3a4a2a; --ink-soft:#6a7a5a; --line:#d8e8c0;
+  --accent:#8fb566; --accent-deep:#5e8a4a; --accent-soft:#c2e396;
+  --accent-btn1:#a3c47a; --accent-btn2:#5e8a4a;
+  --shadow:0 2px 10px rgba(58,74,42,.10); --shadow-lg:0 8px 28px rgba(58,74,42,.16);
+  --texture:rgba(58,74,42,.025);
+  --glow1:rgba(250,253,205,.9); --glow2:rgba(196,233,187,.6);
+  --danger-bg:#f0d8c8; --danger-fg:#a05a3a;
+  --pl-bg:#fafdcd; --pl-fg:#7a8a20;
+  --kp-bg:#c2e396; --kp-fg:#4a6a2a;
+  --gm-bg:#d0ddf0; --gm-fg:#4a6486;
+  --dm-bg:#e8d8f0; --dm-fg:#6b4a7d;
+}
+[data-theme="5"]{
+  --cream-bg:#fddbea; --cream-deep:#febad8; --paper:#fffbfd; --card:#fffdfe;
+  --ink:#4a3a5a; --ink-soft:#8a7a9a; --line:#e8d0e8;
+  --accent:#bfaae6; --accent-deep:#8a7ac0; --accent-soft:#e3d8f8;
+  --accent-btn1:#cdbcee; --accent-btn2:#8a7ac0;
+  --shadow:0 2px 10px rgba(122,96,150,.10); --shadow-lg:0 8px 28px rgba(122,96,150,.16);
+  --texture:rgba(122,96,150,.025);
+  --glow1:rgba(253,219,234,.9); --glow2:rgba(227,216,248,.6);
+  --danger-bg:#f8d8dc; --danger-fg:#a04a5a;
+  --pl-bg:#febad8; --pl-fg:#8a3a6a;
+  --kp-bg:#d9eebd; --kp-fg:#54724a;
+  --gm-bg:#bcc2e5; --gm-fg:#3a3550;
+  --dm-bg:#e3d8f8; --dm-fg:#5a4a7a;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{min-height:100%}
+body{
+  font-family:"PingFang SC","Microsoft YaHei","Noto Sans SC",sans-serif;
+  color:var(--ink);
+  background:
+    radial-gradient(1200px 500px at 85% -10%, var(--glow1), transparent),
+    radial-gradient(900px 420px at -10% 110%, var(--glow2), transparent),
+    var(--cream-bg);
+  background-attachment:fixed;
+  transition:background-color .35s ease, color .35s ease;
+}
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.5;
+  background-image:repeating-linear-gradient(0deg, var(--texture) 0 1px, transparent 1px 3px);
+}
+button{font-family:inherit;cursor:pointer}
+input,textarea,select{font-family:inherit;color:var(--ink)}
+::selection{background:var(--accent-soft)}
+.app{position:relative;z-index:1}
+.main{max-width:1500px;margin:0 auto;padding:24px 22px 60px}
+.page-head{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;margin-bottom:16px;flex-wrap:wrap}
+.page-head h1{font-size:22px;letter-spacing:1px}
+.page-head p{font-size:13px;color:var(--ink-soft);margin-top:4px}
+.head-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.theme-picker{
+  display:flex;align-items:center;gap:6px;
+  padding:6px 12px 6px 14px;border-radius:999px;
+  background:var(--card);border:1px solid var(--line);
+  box-shadow:var(--shadow);transition:background .35s, border-color .35s;
+}
+.theme-picker .theme-label{font-size:12px;color:var(--ink-soft);margin-right:2px}
+.theme-dot{
+  width:22px;height:22px;border-radius:50%;border:2px solid var(--line);
+  cursor:pointer;padding:0;transition:transform .15s, border-color .15s, box-shadow .15s;
+}
+.theme-dot:hover{transform:scale(1.15)}
+.theme-dot.active{border-color:var(--accent-deep);box-shadow:0 0 0 3px var(--accent-soft)}
+.theme-dot[data-theme="1"]{background:linear-gradient(135deg,#FFC8DD,#BDE0FE)}
+.theme-dot[data-theme="2"]{background:linear-gradient(135deg,#c2e396,#efc8d7)}
+.theme-dot[data-theme="3"]{background:linear-gradient(135deg,#75bab0,#f8e6b6)}
+.theme-dot[data-theme="4"]{background:linear-gradient(135deg,#c2e396,#fafdcd)}
+.theme-dot[data-theme="5"]{background:linear-gradient(135deg,#bfaae6,#febad8)}
+.btn{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:9px 16px;border-radius:10px;border:1px solid transparent;
+  font-size:13.5px;transition:.15s;background:var(--cream-deep);color:var(--ink);
+}
+.btn:hover{filter:brightness(.97)}
+.btn-primary{background:linear-gradient(135deg,var(--accent-btn1),var(--accent-btn2));color:#fff;box-shadow:var(--shadow)}
+.btn-primary:hover{filter:brightness(1.05)}
+.btn-ghost{background:transparent;border-color:var(--line);color:var(--ink-soft)}
+.btn-ghost:hover{background:var(--cream-deep);color:var(--ink)}
+.icon-btn{border:none;background:transparent;color:var(--ink-soft);padding:4px 6px;border-radius:7px;font-size:14px;line-height:1}
+.icon-btn:hover{background:var(--accent-soft);color:var(--accent-deep)}
+.icon-btn.danger:hover{background:var(--danger-bg);color:var(--danger-fg)}
+.icon-btn:disabled{opacity:.25;cursor:not-allowed}
+.icon-btn:disabled:hover{background:transparent;color:var(--ink-soft)}
+.filters{
+  display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px;
+  padding:14px 16px;background:var(--card);border:1px solid var(--line);
+  border-radius:var(--radius);box-shadow:var(--shadow);
+  transition:background .35s, border-color .35s;
+}
+.filters input[type="text"]{
+  flex:1;min-width:200px;padding:9px 14px;border:1px solid var(--line);
+  border-radius:10px;background:var(--paper);font-size:13.5px;outline:none;transition:.15s;
+}
+.filters input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.filters select{
+  padding:9px 12px;border:1px solid var(--line);border-radius:10px;
+  background:var(--paper);font-size:13.5px;outline:none;cursor:pointer;transition:.15s;
+}
+.filters select:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.stats-bar{
+  display:flex;gap:14px;flex-wrap:wrap;align-items:center;
+  padding:8px 16px;margin-bottom:12px;font-size:12.5px;color:var(--ink-soft);
+}
+.stats-bar b{color:var(--ink);font-size:13.5px;margin-right:2px}
+.stats-bar .sort-hint{
+  margin-left:auto;font-size:11.5px;color:var(--ink-soft);
+  padding:2px 10px;border-radius:999px;background:var(--cream-deep);
+}
+.table-wrap{
+  overflow-x:auto;background:var(--card);border:1px solid var(--line);
+  border-radius:var(--radius);box-shadow:var(--shadow);padding:6px 4px;
+  transition:background .35s, border-color .35s;
+}
+.rec-table{
+  width:1380px;
+  border-collapse:collapse;
+  font-size:13px;
+  table-layout:fixed;
+}
+.rec-table th{
+  font-size:12px;color:var(--ink-soft);text-align:left;padding:10px 12px;
+  border-bottom:1.5px solid var(--line);font-weight:600;
+  position:sticky;top:0;background:var(--card);z-index:1;
+}
+.rec-table td{
+  padding:10px 12px;border-bottom:1px dashed var(--line);
+  vertical-align:top;word-break:break-word;overflow-wrap:anywhere;
+  white-space:normal;line-height:1.55;
+}
+.rec-table tr:hover td{background:rgba(0,0,0,.025)}
+.rec-table tr:last-child td{border-bottom:none}
+.col-module{font-weight:600}
+.col-note{color:var(--ink-soft);font-size:12.5px}
+.col-date{font-variant-numeric:tabular-nums}
+.col-ops{ text-align:center; }
+.col-ops .ops-flex{
+  display:flex;
+  gap:4px;
+  justify-content:center;
+  align-items:flex-start;
+}
+.col-ops .ops-col{
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+}
+.col-ops .icon-btn{
+  width:28px;
+  display:flex;align-items:center;justify-content:center;
+  padding:3px 0;
+  font-size:13px;
+}
+.tag{
+  display:inline-block;padding:2px 9px;border-radius:999px;
+  font-size:11.5px;font-weight:600;white-space:nowrap;
+}
+.tag.pl{background:var(--pl-bg);color:var(--pl-fg)}
+.tag.kp{background:var(--kp-bg);color:var(--kp-fg)}
+.tag.gm{background:var(--gm-bg);color:var(--gm-fg)}
+.tag.dm{background:var(--dm-bg);color:var(--dm-fg)}
+.status-chip{
+  display:inline-block;padding:2px 9px;border-radius:999px;
+  font-size:11.5px;font-weight:600;white-space:nowrap;
+}
+.status-chip.status-satellite{background:#d8e8f8;color:#3a5a7a}
+.status-chip.status-ongoing{background:#d4eed0;color:#3a6a3a}
+.status-chip.status-paused{background:#fae8c8;color:#8a6a20}
+.status-chip.status-disbanded{background:#e8e0d8;color:#7a6a5a}
+.status-chip.status-finished{background:#f0e0c8;color:#96683a}
+.ho-chip{
+  display:inline-block;padding:2px 9px;border-radius:7px;
+  font-size:11.5px;font-weight:600;
+  background:var(--accent-soft);color:var(--accent-deep);
+}
+.ho-chip.none{background:var(--cream-deep);color:var(--ink-soft);font-weight:400}
+.rule-chip{
+  display:inline-block;padding:2px 9px;border-radius:7px;
+  font-size:11.5px;border:1px solid var(--line);
+  background:var(--paper);color:var(--ink-soft);
+}
+.empty{
+  padding:46px 20px;text-align:center;color:var(--ink-soft);font-size:13.5px;
+  line-height:2;border:1.5px dashed var(--line);border-radius:var(--radius);
+  background:var(--paper);opacity:.75;
+}
+.modal-mask{
+  position:fixed;inset:0;background:rgba(30,24,18,.45);backdrop-filter:blur(2px);
+  display:none;align-items:flex-start;justify-content:center;z-index:50;
+  padding:5vh 16px;overflow-y:auto;
+}
+.modal-mask.open{display:flex}
+.modal{
+  background:var(--card);border-radius:16px;box-shadow:var(--shadow-lg);
+  width:100%;max-width:680px;padding:24px 26px;
+  animation:fadeIn .2s ease;border:1px solid var(--line);
+}
+.modal h3{font-size:17px;margin-bottom:16px;letter-spacing:.5px}
+.modal-foot{display:flex;justify-content:flex-end;gap:10px;margin-top:18px}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.field{margin-bottom:13px}
+.field label{display:block;font-size:12.5px;color:var(--ink-soft);margin-bottom:5px}
+.field input,.field textarea,.field select{
+  width:100%;padding:9px 12px;border:1px solid var(--line);border-radius:10px;
+  background:var(--paper);font-size:13.5px;outline:none;transition:.15s;
+}
+.field input:focus,.field textarea:focus,.field select:focus{
+  border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);
+}
+.field textarea{resize:vertical;min-height:70px;line-height:1.65}
+.field .hint{font-size:11px;color:var(--ink-soft);opacity:.7;margin-top:4px;line-height:1.5}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}
+.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0 12px}
+#toast{
+  position:fixed;left:50%;bottom:34px;transform:translateX(-50%) translateY(20px);
+  background:var(--ink);color:var(--card);padding:10px 22px;border-radius:999px;
+  font-size:13px;opacity:0;pointer-events:none;transition:.25s;z-index:99;
+  box-shadow:var(--shadow-lg);max-width:calc(100vw - 40px);text-align:center;
+}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+@media (max-width:720px){
+  .main{padding:16px 12px 50px}
+  .page-head h1{font-size:19px}
+  .head-actions{width:100%}
+  .row2,.row3{grid-template-columns:1fr}
+  .filters{padding:10px}
+}
+</style>
+</head>
+<body>
+
+<div class="app">
+  <main class="main">
+
+    <div class="page-head">
+      <div>
+        <h1>跑团记录管理</h1>
+        <p>完全按照姜饼猫习惯设计，最适合整理癖的一集</p>
+      </div>
+      <div class="head-actions">
+        <div class="theme-picker" id="theme-picker" title="切换主题">
+          <span class="theme-label">主题</span>
+          <button class="theme-dot" data-theme="1" title="马卡龙奶油"></button>
+          <button class="theme-dot" data-theme="2" title="粉绿"></button>
+          <button class="theme-dot" data-theme="3" title="青绿奶油"></button>
+          <button class="theme-dot" data-theme="4" title="黄绿"></button>
+          <button class="theme-dot" data-theme="5" title="粉紫"></button>
+        </div>
+        <button class="btn btn-ghost" id="btn-reset-sort" title="恢复到默认排序">↺ 默认排序</button>
+        <button class="btn btn-ghost" id="btn-import">导入数据</button>
+        <button class="btn btn-ghost" id="btn-export">导出数据</button>
+        <button class="btn btn-primary" id="btn-new">＋ 新增记录</button>
+      </div>
+    </div>
+
+    <div class="filters">
+      <input type="text" id="f-search" placeholder="🔍 搜索模组、PC、PL、GM/KP、备注…">
+      <select id="f-role">
+        <option value="">全部身份</option>
+        <option value="PL">PL</option>
+        <option value="KP">KP</option>
+        <option value="GM">GM</option>
+        <option value="DM">DM</option>
+      </select>
+      <select id="f-ho"><option value="">全部 HO 位</option></select>
+      <select id="f-rule"><option value="">全部规则</option></select>
+      <select id="f-status">
+        <option value="">全部状态</option>
+        <option value="卫星">卫星</option>
+        <option value="进行中">进行中</option>
+        <option value="暂停中">暂停中</option>
+        <option value="散桌">散桌</option>
+        <option value="结团">结团</option>
+      </select>
+    </div>
+
+    <div class="stats-bar" id="stats-bar"></div>
+
+    <div class="table-wrap">
+      <table class="rec-table">
+        <colgroup>
+          <col style="width:80px">
+          <col style="width:200px">
+          <col style="width:90px">
+          <col style="width:80px">
+          <col style="width:80px">
+          <col style="width:150px">
+          <col style="width:100px">
+          <col style="width:110px">
+          <col style="width:100px">
+          <col style="width:100px">
+          <col style="width:200px">
+          <col style="width:90px">
+        </colgroup>
+        <thead>
+          <tr>
+            <th>身份</th>
+            <th>模组</th>
+            <th>规则</th>
+            <th>HO 位</th>
+            <th>状态</th>
+            <th>PC</th>
+            <th>PL</th>
+            <th>GM / KP</th>
+            <th>开团日期</th>
+            <th>结团日期</th>
+            <th>备注</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="rec-tbody"></tbody>
+      </table>
+    </div>
+
+  </main>
+</div>
+
+<div class="modal-mask" id="modal-mask"><div class="modal" id="modal-box"></div></div>
+<div id="toast"></div>
+<input type="file" id="import-file" accept=".json" style="display:none">
+
+<script>
+/* ================= 主题 ================= */
+const THEME_KEY = 'trpg_records_theme';
+const THEME_LIST = ['1','2','3','4','5'];
+function applyTheme(n){
+  n = String(n);
+  if(!THEME_LIST.includes(n)) n='1';
+  if(n==='1') document.documentElement.removeAttribute('data-theme');
+  else document.documentElement.setAttribute('data-theme', n);
+  document.querySelectorAll('.theme-dot').forEach(d=>{
+    d.classList.toggle('active', d.dataset.theme===n);
+  });
+}
+function initTheme(){
+  let saved='1';
+  try{ saved = localStorage.getItem(THEME_KEY)||'1'; }catch(e){}
+  applyTheme(saved);
+  document.getElementById('theme-picker').addEventListener('click', e=>{
+    const btn = e.target.closest('.theme-dot'); if(!btn) return;
+    const n = btn.dataset.theme;
+    applyTheme(n);
+    try{ localStorage.setItem(THEME_KEY,n); }catch(e){}
+  });
+}
+
+/* ================= 常量 ================= */
+const LS_KEY = 'trpg_records_manager_v1';
+const ROLES = ['PL','KP','GM','DM'];
+/* HO 位固定选项（按指定顺序） */
+const HO_OPTIONS = ['无HO','HO1','HO2','HO3','HO4','HO5','单人','2HO','3HO','4HO','5HO','其她'];
+const STATUS_OPTIONS = ['卫星','进行中','暂停中','散桌','结团'];
+const DEFAULT_RULES = ['COC7','COJ','BRP','餐云卧石','inSANe','DND','忍神'];
+
+const STATUS_KEY = {
+  '卫星':'satellite',
+  '进行中':'ongoing',
+  '暂停中':'paused',
+  '散桌':'disbanded',
+  '结团':'finished'
+};
+
+/* 默认排序优先级：结团 > 散桌 > 暂停中 > 进行中 > 卫星 */
+const STATUS_ORDER = {
+  '结团':   0,
+  '散桌':   1,
+  '暂停中': 2,
+  '进行中': 3,
+  '卫星':   4
+};
+
+/* ================= 默认排序 ================= */
+function defaultSort(a, b){
+  // 1. 状态
+  const sa = STATUS_ORDER[a.status];
+  const sb = STATUS_ORDER[b.status];
+  const va = (sa === undefined) ? 99 : sa;
+  const vb = (sb === undefined) ? 99 : sb;
+  if(va !== vb) return va - vb;
+
+  // 2. 结团日期：空白在前，然后按日期升序
+  const ea = a.endDate || '';
+  const eb = b.endDate || '';
+  if(ea !== eb){
+    if(!ea) return -1;
+    if(!eb) return 1;
+    return ea.localeCompare(eb);
+  }
+
+  // 3. 开团日期：空白在前，然后按日期升序
+  const sta = a.startDate || '';
+  const stb = b.startDate || '';
+  if(sta !== stb){
+    if(!sta) return -1;
+    if(!stb) return 1;
+    return sta.localeCompare(stb);
+  }
+
+  // 4. 添加顺序（数字越小越靠前）
+  const oa = (typeof a.order === 'number') ? a.order : 0;
+  const ob = (typeof b.order === 'number') ? b.order : 0;
+  if(oa !== ob) return oa - ob;
+
+  // 5. 模组名首字母
+  return String(a.module || '').localeCompare(String(b.module || ''), 'zh-Hans-CN');
+}
+
+/* ================= 数据 ================= */
+let DB = { records: [], manualOrder: false, nextOrder: 0 };
+
+function loadDB(){
+  try{
+    const raw = localStorage.getItem(LS_KEY);
+    if(raw){
+      const d = JSON.parse(raw);
+      if(d && Array.isArray(d.records)){
+        const normalized = d.records.map((r, i) => normalizeRecord(r, i));
+        let maxOrder = -1;
+        normalized.forEach(r => { if(r.order > maxOrder) maxOrder = r.order; });
+        DB = {
+          records: normalized,
+          manualOrder: !!d.manualOrder,
+          nextOrder: Math.max(
+            typeof d.nextOrder === 'number' ? d.nextOrder : 0,
+            maxOrder + 1
+          )
+        };
+      }
+    }
+  }catch(e){}
+}
+function saveDB(){
+  try{ localStorage.setItem(LS_KEY, JSON.stringify(DB)); return true; }
+  catch(e){ toast('保存失败：本地存储空间不足'); return false; }
+}
+
+const uid = ()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function toast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  clearTimeout(t._h); t._h = setTimeout(()=>t.classList.remove('show'),2200);
+}
+
+function guessStatusFromText(s){
+  s = String(s||'');
+  if(/已?结团|已完成/.test(s)) return '结团';
+  if(/已?散桌|散团/.test(s)) return '散桌';
+  if(/卫星/.test(s)) return '卫星';
+  if(/暂停/.test(s)) return '暂停中';
+  if(/进行中|开团中/.test(s)) return '进行中';
+  return null;
+}
+function mapStatus(s){
+  return guessStatusFromText(s) || '进行中';
+}
+
+/* HO 位标准化：只允许 HO_OPTIONS 里的选项，其他归到"其她" */
+function normalizeHO(v){
+  if(v === undefined || v === null) return '无HO';
+  const s = String(v).trim().replace(/\s+/g,'');
+  if(!s) return '无HO';
+  const low = s.toLowerCase();
+  if(low === 'none' || low === '无' || low === '无ho') return '无HO';
+  // 在固定选项里找忽略大小写的匹配
+  for(const item of HO_OPTIONS){
+    if(item.toLowerCase() === low) return item;
+  }
+  // 不认识的旧值 → 其她
+  return '其她';
+}
+
+function normalizeRecord(r, idx){
+  let status = r.status;
+  if(!STATUS_OPTIONS.includes(status)){
+    status = guessStatusFromText(status) || guessStatusFromText(r.note) || '进行中';
+  }
+  return {
+    id: r.id || uid(),
+    role: ROLES.includes(r.role) ? r.role : 'PL',
+    module: r.module || '',
+    rule: r.rule || '',
+    ho: normalizeHO(r.ho),
+    pc: r.pc || r.character || '',
+    pl: r.pl || '',
+    gm: r.gm || r.kp || '',
+    startDate: r.startDate || '',
+    endDate: r.endDate || '',
+    status: status,
+    note: r.note || '',
+    order: (typeof r.order === 'number') ? r.order
+         : (typeof idx === 'number' ? idx : 0)
+  };
+}
+
+/* ================= 弹窗 ================= */
+const mask = document.getElementById('modal-mask');
+const mbox = document.getElementById('modal-box');
+function openModal(html){ mbox.innerHTML = html; mask.classList.add('open'); }
+function closeModal(){ mask.classList.remove('open'); mbox.innerHTML=''; }
+mask.addEventListener('click', e=>{ if(e.target===mask) closeModal(); });
+document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeModal(); });
+
+/* ================= 下拉选项 ================= */
+function getRulesForFilter(){
+  const set = new Set();
+  DB.records.forEach(r=>{ if(r.rule) set.add(r.rule); });
+  return [...set].sort();
+}
+function getRuleSuggestions(){
+  const set = new Set(DEFAULT_RULES);
+  DB.records.forEach(r=>{ if(r.rule) set.add(r.rule); });
+  return [...set];
+}
+
+function refreshRuleFilter(){
+  const sel = document.getElementById('f-rule');
+  const cur = sel.value;
+  const rules = getRulesForFilter();
+  sel.innerHTML = '<option value="">全部规则</option>' +
+    rules.map(r=>`<option value="${esc(r)}">${esc(r)}</option>`).join('');
+  if(rules.includes(cur)) sel.value = cur;
+}
+
+function refreshHOFilter(){
+  const sel = document.getElementById('f-ho');
+  const cur = sel.value;
+  sel.innerHTML = '<option value="">全部 HO 位</option>' +
+    HO_OPTIONS.map(h=>`<option value="${esc(h)}">${esc(h)}</option>`).join('');
+  if(HO_OPTIONS.includes(cur)) sel.value = cur;
+}
+
+/* ================= 渲染 ================= */
+function renderStats(items){
+  const total = DB.records.length;
+  const shown = items.length;
+  const byStatus = { '卫星':0, '进行中':0, '暂停中':0, '散桌':0, '结团':0 };
+  DB.records.forEach(r=>{ if(byStatus[r.status]!==undefined) byStatus[r.status]++; });
+
+  const sortHint = DB.manualOrder
+    ? '手动排序'
+    : '默认排序 · 状态 › 结团日 › 开团日 › 添加顺序 › 模组名';
+
+  document.getElementById('stats-bar').innerHTML =
+    `<span><b>${total}</b>条记录</span>` +
+    `<span>· 卫星 <b>${byStatus['卫星']}</b></span>` +
+    `<span>· 进行中 <b>${byStatus['进行中']}</b></span>` +
+    `<span>· 暂停中 <b>${byStatus['暂停中']}</b></span>` +
+    `<span>· 散桌 <b>${byStatus['散桌']}</b></span>` +
+    `<span>· 结团 <b>${byStatus['结团']}</b></span>` +
+    (shown!==total ? `<span>· 当前筛选 <b>${shown}</b> 条</span>` : '') +
+    `<span class="sort-hint">${sortHint}</span>`;
+}
+
+function renderTable(){
+  if(!DB.manualOrder){
+    DB.records.sort(defaultSort);
+  }
+
+  const q  = (document.getElementById('f-search').value||'').trim().toLowerCase();
+  const fr = document.getElementById('f-role').value;
+  const fh = document.getElementById('f-ho').value;
+  const fru= document.getElementById('f-rule').value;
+  const fs = document.getElementById('f-status').value;
+
+  let items = DB.records.slice();
+
+  if(fr)  items = items.filter(r=>r.role===fr);
+  if(fh)  items = items.filter(r=>r.ho===fh);
+  if(fru) items = items.filter(r=>r.rule===fru);
+  if(fs)  items = items.filter(r=>r.status===fs);
+  if(q)   items = items.filter(r =>
+    [r.module, r.pc, r.pl, r.gm, r.note, r.rule, r.ho, r.status].join(' ').toLowerCase().includes(q)
+  );
+
+  renderStats(items);
+
+  const tb = document.getElementById('rec-tbody');
+  if(!items.length){
+    tb.innerHTML = `<tr><td colspan="12"><div class="empty">暂无匹配记录<br>点右上角「新增记录」开始，或点「导入数据」载入 JSON</div></td></tr>`;
+    return;
+  }
+
+  const indexOf = new Map();
+  DB.records.forEach((r,i)=>indexOf.set(r.id, i));
+
+  tb.innerHTML = items.map(r=>{
+    const roleCls = (r.role||'PL').toLowerCase();
+    const hoCls = (r.ho==='无HO' || !r.ho) ? 'ho-chip none' : 'ho-chip';
+    const stKey = STATUS_KEY[r.status] || 'ongoing';
+    const idx = indexOf.get(r.id);
+    const canUp = idx > 0;
+    const canDown = idx < DB.records.length - 1;
+    return `<tr>
+      <td><span class="tag ${roleCls}">${esc(r.role||'—')}</span></td>
+      <td class="col-module">${esc(r.module||'—')}</td>
+      <td>${r.rule ? `<span class="rule-chip">${esc(r.rule)}</span>` : '<span style="color:var(--ink-soft);opacity:.5">—</span>'}</td>
+      <td><span class="${hoCls}">${esc(r.ho||'无HO')}</span></td>
+      <td><span class="status-chip status-${stKey}">${esc(r.status||'进行中')}</span></td>
+      <td>${esc(r.pc||'—')}</td>
+      <td>${esc(r.pl||'—')}</td>
+      <td>${esc(r.gm||'—')}</td>
+      <td class="col-date">${esc(r.startDate||'—')}</td>
+      <td class="col-date">${esc(r.endDate||'—')}</td>
+      <td class="col-note">${esc(r.note||'')}</td>
+      <td class="col-ops">
+        <div class="ops-flex">
+          <div class="ops-col">
+            <button class="icon-btn" data-up="${r.id}" title="上移" ${canUp?'':'disabled'}>▲</button>
+            <button class="icon-btn" data-down="${r.id}" title="下移" ${canDown?'':'disabled'}>▼</button>
+          </div>
+          <div class="ops-col">
+            <button class="icon-btn" data-edit="${r.id}" title="编辑">✏️</button>
+            <button class="icon-btn danger" data-del="${r.id}" title="删除">🗑</button>
+          </div>
+        </div>
+      </td>
+    </tr>`;
+  }).join('');
+
+  tb.querySelectorAll('[data-edit]').forEach(b=>{
+    b.onclick = ()=>openRecordModal(b.dataset.edit);
+  });
+  tb.querySelectorAll('[data-del]').forEach(b=>{
+    b.onclick = ()=>{
+      if(confirm('确定删除这条记录吗？')){
+        DB.records = DB.records.filter(r=>r.id!==b.dataset.del);
+        saveDB();
+        refreshRuleFilter();
+        refreshHOFilter();
+        renderTable();
+        toast('已删除');
+      }
+    };
+  });
+  tb.querySelectorAll('[data-up]').forEach(b=>{
+    b.onclick = ()=>moveRecord(b.dataset.up, -1);
+  });
+  tb.querySelectorAll('[data-down]').forEach(b=>{
+    b.onclick = ()=>moveRecord(b.dataset.down, +1);
+  });
+}
+
+function moveRecord(id, delta){
+  if(!DB.manualOrder){
+    DB.manualOrder = true;
+  }
+  const idx = DB.records.findIndex(r=>r.id===id);
+  if(idx < 0) return;
+  const newIdx = idx + delta;
+  if(newIdx < 0 || newIdx >= DB.records.length) return;
+  const [item] = DB.records.splice(idx, 1);
+  DB.records.splice(newIdx, 0, item);
+  saveDB();
+  renderTable();
+  toast(delta<0 ? '已上移' : '已下移');
+}
+
+/* ================= 恢复默认排序 ================= */
+document.getElementById('btn-reset-sort').onclick = ()=>{
+  DB.manualOrder = false;
+  DB.records.sort(defaultSort);
+  saveDB();
+  renderTable();
+  toast('已恢复默认排序');
+};
+
+/* ================= 新增 / 编辑 ================= */
+function openRecordModal(id){
+  const editing = !!id;
+  let r;
+
+  if(editing){
+    r = DB.records.find(x=>x.id===id);
+    if(!r){ toast('找不到这条记录，可能已被删除'); return; }
+  }else{
+    r = {
+      role:'PL', module:'', rule:'', ho:'无HO',
+      pc:'', pl:'', gm:'', startDate:'', endDate:'',
+      status:'进行中', note:''
+    };
+  }
+
+  const roleList = ROLES.slice();
+  if(r.role && !roleList.includes(r.role)) roleList.push(r.role);
+
+  const statusList = STATUS_OPTIONS.slice();
+  if(r.status && !statusList.includes(r.status)) statusList.push(r.status);
+
+  const roleOpts   = roleList.map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join('');
+  const hoOpts     = HO_OPTIONS.map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join('');
+  const statusOpts = statusList.map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join('');
+  const ruleOpts   = getRuleSuggestions().map(x=>`<option value="${esc(x)}"></option>`).join('');
+
+  openModal(
+    `<h3>${editing?'编辑记录':'新增记录'}</h3>` +
+
+    `<div class="row3">
+      <div class="field"><label>身份</label>
+        <select id="edit-role">${roleOpts}</select>
+      </div>
+      <div class="field"><label>HO 位</label>
+        <select id="edit-ho">${hoOpts}</select>
+      </div>
+      <div class="field"><label>状态</label>
+        <select id="edit-status">${statusOpts}</select>
+      </div>
+    </div>` +
+
+    `<div class="row2">
+      <div class="field"><label>规则</label>
+        <input id="edit-rule" value="${esc(r.rule)}" placeholder="如：COC7、COJ、inSANe" list="rule-list" autocomplete="off">
+        <datalist id="rule-list">${ruleOpts}</datalist>
+        <div class="hint">可从下拉选，也可直接手填任意规则名</div>
+      </div>
+      <div class="field"><label>模组</label>
+        <input id="edit-module" value="${esc(r.module)}" placeholder="如：追书人">
+      </div>
+    </div>` +
+
+    `<div class="row2">
+      <div class="field"><label>PC（角色名）</label>
+        <input id="edit-pc" value="${esc(r.pc)}" placeholder="如：张三">
+      </div>
+      <div class="field"><label>PL（玩家）</label>
+        <input id="edit-pl" value="${esc(r.pl)}" placeholder="如：李四">
+      </div>
+    </div>` +
+
+    `<div class="field"><label>GM / KP</label>
+      <input id="edit-gm" value="${esc(r.gm)}" placeholder="如：王五">
+    </div>` +
+
+    `<div class="row2">
+      <div class="field"><label>开团日期</label>
+        <input type="date" id="edit-start" value="${esc(r.startDate)}">
+      </div>
+      <div class="field"><label>结团日期</label>
+        <input type="date" id="edit-end" value="${esc(r.endDate)}">
+      </div>
+    </div>` +
+
+    `<div class="field"><label>备注</label>
+      <textarea id="edit-note" rows="3" placeholder="其他想记的内容">${esc(r.note)}</textarea>
+    </div>` +
+
+    `<div class="modal-foot">
+      <button class="btn btn-ghost" id="edit-cancel">取消</button>
+      <button class="btn btn-primary" id="edit-ok">保存</button>
+    </div>`
+  );
+
+  const roleSel   = mbox.querySelector('#edit-role');
+  const hoSel     = mbox.querySelector('#edit-ho');
+  const statusSel = mbox.querySelector('#edit-status');
+  if(roleSel)   roleSel.value = r.role;
+  if(hoSel)     hoSel.value = r.ho || '无HO';
+  if(statusSel) statusSel.value = r.status;
+  const ruleInput = mbox.querySelector('#edit-rule');
+  if(ruleInput) ruleInput.value = r.rule || '';
+
+  mbox.querySelector('#edit-cancel').onclick = closeModal;
+  mbox.querySelector('#edit-ok').onclick = ()=>{
+    const roleVal   = (mbox.querySelector('#edit-role').value)   || 'PL';
+    const hoVal     = (mbox.querySelector('#edit-ho').value)     || '无HO';
+    const statusVal = (mbox.querySelector('#edit-status').value) || '进行中';
+
+    const data = {
+      role:      roleVal,
+      ho:        hoVal,
+      status:    statusVal,
+      rule:      mbox.querySelector('#edit-rule').value.trim(),
+      module:    mbox.querySelector('#edit-module').value.trim(),
+      pc:        mbox.querySelector('#edit-pc').value.trim(),
+      pl:        mbox.querySelector('#edit-pl').value.trim(),
+      gm:        mbox.querySelector('#edit-gm').value.trim(),
+      startDate: mbox.querySelector('#edit-start').value,
+      endDate:   mbox.querySelector('#edit-end').value,
+      note:      mbox.querySelector('#edit-note').value.trim()
+    };
+    if(!data.module){ toast('请填写模组名'); return; }
+
+    if(editing){
+      const target = DB.records.find(x=>x.id===id);
+      if(!target){ toast('找不到记录，保存失败'); return; }
+      Object.assign(target, data);
+    }else{
+      DB.records.push(Object.assign(
+        { id: uid(), order: DB.nextOrder++ },
+        data
+      ));
+    }
+    saveDB();
+    closeModal();
+    refreshRuleFilter();
+    refreshHOFilter();
+    renderTable();
+    toast(editing?'已更新':'已保存');
+  };
+}
+
+document.getElementById('btn-new').onclick = ()=>openRecordModal();
+
+/* ================= 筛选事件 ================= */
+document.getElementById('f-search').addEventListener('input', renderTable);
+document.getElementById('f-role').addEventListener('change', renderTable);
+document.getElementById('f-ho').addEventListener('change', renderTable);
+document.getElementById('f-rule').addEventListener('change', renderTable);
+document.getElementById('f-status').addEventListener('change', renderTable);
+
+/* ================= 导入 ================= */
+document.getElementById('btn-import').onclick = ()=>document.getElementById('import-file').click();
+document.getElementById('import-file').addEventListener('change', function(){
+  const f = this.files[0]; if(!f) return;
+  const rd = new FileReader();
+  rd.onload = ()=>{
+    try{
+      const data = JSON.parse(rd.result);
+      const parsed = parseAnyFormat(data);
+      if(!parsed.records.length){ toast('未从文件中解析出记录'); this.value=''; return; }
+
+      const newRecs = parsed.records.map((r, i) => normalizeRecord(r, i));
+      const mode = DB.records.length
+        ? (confirm(`解析到 ${newRecs.length} 条记录。\n\n点「确定」追加到现有数据\n点「取消」替换现有数据`) ? 'append' : 'replace')
+        : 'append';
+
+      if(mode === 'replace'){
+        newRecs.forEach((r, i) => { r.order = i; });
+        DB.records = newRecs;
+        DB.nextOrder = newRecs.length;
+      }else{
+        const maxOrder = DB.records.reduce((m, r) => Math.max(m, r.order || 0), -1);
+        let base = maxOrder + 1;
+        newRecs.forEach((r, i) => { r.order = base + i; });
+        DB.nextOrder = base + newRecs.length;
+        DB.records = DB.records.concat(newRecs);
+      }
+      DB.manualOrder = false;
+      saveDB();
+      refreshRuleFilter();
+      refreshHOFilter();
+      renderTable();
+      toast(`导入完成，共 ${newRecs.length} 条`);
+    }catch(e){
+      console.error(e);
+      toast('文件格式不正确，导入失败');
+    }
+    this.value = '';
+  };
+  rd.readAsText(f);
+});
+
+function parseAnyFormat(data){
+  if(!data || typeof data !== 'object') return { records: [] };
+  if(Array.isArray(data.records)) return { records: data.records };
+  if(Array.isArray(data)) return { records: data };
+  if(Array.isArray(data.columns)) return parseColumnsFormat(data);
+  return { records: [] };
+}
+
+function inferRuleFromColumnName(name){
+  const n = String(name||'').trim();
+  if(/^coc\d/i.test(n))   return 'COC7';
+  if(/^coc$/i.test(n))    return 'COC7';
+  if(/^coj/i.test(n))     return 'COJ';
+  if(/^insane$/i.test(n)) return 'inSANe';
+  if(/^dnd/i.test(n))     return 'DND';
+  if(/^brp/i.test(n))     return 'BRP';
+  if(/忍神/.test(n))      return '忍神';
+  if(/餐云卧石/.test(n))  return '餐云卧石';
+  return '';
+}
+
+function parseColumnsFormat(data){
+  const out = [];
+
+  (data.columns||[]).forEach(col=>{
+    const colName = String(col.name||'').trim();
+
+    const hoMatch     = colName.match(/^ho\s*([1-8])$/i);
+    const noneHoMatch = /^无\s*ho$/i.test(colName);
+    const gmSideMatch = /^(kp|gm)(\s*[\/／]\s*(kp|gm))?\s*(侧|side)?$/i.test(colName);
+
+    let ho = '无HO';
+    let rule = '';
+    let forceRole = null;
+    let isGmSide = false;
+
+    if(hoMatch){
+      ho = 'HO' + hoMatch[1];
+    }else if(noneHoMatch){
+      ho = '无HO';
+    }else if(gmSideMatch){
+      forceRole = /gm/i.test(colName) ? 'GM' : 'KP';
+      isGmSide = true;
+    }else{
+      const inferred = inferRuleFromColumnName(colName);
+      if(inferred) rule = inferred;
+    }
+
+    (col.entries||[]).forEach(en=>{
+      const module = en.module || '';
+      const character = en.character || '';
+      const status = en.status || '';
+
+      const rec = {
+        id: uid(),
+        role: forceRole || 'PL',
+        module: module,
+        rule: rule,
+        ho: ho,
+        pc: isGmSide ? '' : character,
+        pl: '',
+        gm: '',
+        startDate: '',
+        endDate: '',
+        status: mapStatus(status),
+        note: ''
+      };
+      if(isGmSide && character){
+        rec.note = '团次：' + character;
+      }
+      out.push(rec);
+    });
+  });
+
+  return { records: out };
+}
+
+/* ================= 导出 ================= */
+document.getElementById('btn-export').onclick = ()=>{
+  const payload = {
+    version: 3,
+    exportedAt: new Date().toISOString(),
+    manualOrder: DB.manualOrder,
+    nextOrder: DB.nextOrder,
+    records: DB.records
+  };
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type:'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = '跑团记录备份_' + new Date().toISOString().slice(0,10) + '.json';
+  a.click();
+  URL.revokeObjectURL(a.href);
+  toast('备份文件已导出');
+};
+
+/* ================= 启动 ================= */
+initTheme();
+loadDB();
+refreshRuleFilter();
+refreshHOFilter();
+renderTable();
+</script>
+</body>
+</html>
